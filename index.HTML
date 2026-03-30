@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One House - Join the Club</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:       #1a4a42;
+      --teal-mid:   #1e5248;
+      --teal-dark:  #132e28;
+      --cream:      #f0ebe0;
+      --cream-warm: #e8e0d0;
+      --gold:       #BCA691;
+      --gold-line:  #c9a87c;
+      --text-dark:  #1a1a18;
+      --text-mid:   #4a4a42;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--text-dark);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+```
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 2rem;
+  background: var(--cream);
+  border-bottom: 1px solid rgba(188,166,145,0.25);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem; font-weight: 400; letter-spacing: 0.06em;
+  color: var(--teal-dark);
+}
+.nav-cta {
+  font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--teal-dark); text-decoration: none;
+  border-bottom: 1.5px solid var(--gold-line); padding-bottom: 1px;
+  transition: color 0.2s;
+}
+.nav-cta:hover { color: var(--teal-mid); }
+
+/* HERO */
+.hero {
+  background: var(--teal);
+  padding: 4.5rem 2rem 3.5rem;
+  position: relative; overflow: hidden;
+  min-height: 72vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 50%; right: -5%; transform: translateY(-50%);
+  width: min(520px, 90vw); height: min(520px, 90vw);
+  border-radius: 50%; border: 1px solid rgba(255,255,255,0.07);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(240,235,224,0.65); margin-bottom: 1.75rem;
+  line-height: 1.6; max-width: 380px;
+  opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.2rem, 9vw, 5.5rem); font-weight: 300;
+  line-height: 1.05; color: var(--cream); margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards;
+}
+.hero-title em { font-style: italic; color: var(--gold); display: block; }
+.hero-body {
+  font-size: 0.92rem; color: rgba(240,235,224,0.75);
+  max-width: 420px; line-height: 1.8; margin-bottom: 3rem;
+  opacity: 0; animation: fadeUp 0.8s 0.4s ease forwards;
+}
+.hero-stats {
+  display: flex; gap: 2.5rem;
+  opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards;
+}
+.hero-stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem; font-weight: 300; color: var(--cream);
+  line-height: 1; display: block;
+}
+.hero-stat-label {
+  font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(240,235,224,0.45); margin-top: 0.25rem; display: block;
+}
+
+/* PILLARS */
+.pillars { background: var(--cream); padding: 3.5rem 2rem 3rem; }
+.pillars-eyebrow {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-mid); margin-bottom: 1.5rem;
+}
+.pillars-tabs {
+  display: flex; gap: 0.5rem; flex-wrap: nowrap;
+  margin-bottom: 2.5rem;
+  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.pillars-tabs::-webkit-scrollbar { display: none; }
+.pillar-tab {
+  font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--teal-dark); border: 1px solid var(--teal-dark);
+  padding: 0.5rem 0.75rem; cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  background: transparent; font-family: 'Jost', sans-serif;
+  white-space: nowrap; flex-shrink: 0;
+}
+.pillar-tab:hover, .pillar-tab.active { background: var(--teal-dark); color: var(--cream); }
+.pillar-panel { display: none; }
+.pillar-panel.active { display: block; animation: fadeIn 0.35s ease; }
+.pillar-panel-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 400;
+  color: var(--teal-dark); margin-bottom: 0.75rem; line-height: 1.15;
+}
+.pillar-panel-body { font-size: 0.9rem; color: var(--text-mid); max-width: 480px; line-height: 1.8; }
+
+/* FORM */
+.join-section { background: var(--cream); padding: 0 2rem 4rem; }
+.join-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 400;
+  color: var(--teal-dark); margin-bottom: 0.6rem; line-height: 1.1;
+}
+.join-subtitle {
+  font-size: 0.88rem; color: var(--text-mid);
+  margin-bottom: 2.5rem; line-height: 1.7; max-width: 480px;
+}
+.signup-form { display: flex; flex-direction: column; max-width: 560px; }
+.form-field { display: flex; flex-direction: column; margin-bottom: 1.6rem; }
+.form-label {
+  font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 0.5rem; font-weight: 400;
+}
+.form-input, .form-select {
+  background: transparent; border: none;
+  border-bottom: 1px solid rgba(26,74,66,0.22);
+  color: var(--text-dark); padding: 0.6rem 0;
+  font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 300;
+  outline: none; transition: border-color 0.2s;
+  -webkit-appearance: none; appearance: none; border-radius: 0; width: 100%;
+}
+.form-input::placeholder { color: rgba(74,74,66,0.35); }
+.form-input:focus, .form-select:focus { border-bottom-color: var(--teal); }
+.form-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23BCA691' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 4px center; padding-right: 1.5rem;
+}
+.checkbox-group { display: flex; gap: 0.85rem; align-items: flex-start; margin-bottom: 1.1rem; }
+.checkbox-group input[type="checkbox"] {
+  width: 16px; height: 16px; min-width: 16px;
+  border: 1px solid rgba(26,74,66,0.35);
+  appearance: none; -webkit-appearance: none;
+  cursor: pointer; margin-top: 0.2rem; position: relative;
+  transition: background 0.15s, border-color 0.15s;
+}
+.checkbox-group input[type="checkbox"]:checked { background: var(--teal); border-color: var(--teal); }
+.checkbox-group input[type="checkbox"]:checked::after {
+  content: ''; position: absolute;
+  left: 4px; top: 2px; width: 5px; height: 8px;
+  border: 1.5px solid var(--cream); border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+.checkbox-label { font-size: 0.82rem; color: var(--text-mid); line-height: 1.65; }
+.checkbox-label a { color: var(--teal); text-decoration: underline; text-underline-offset: 2px; }
+.form-submit {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem;
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cream); background: var(--teal-dark); border: none;
+  padding: 1.15rem 2.5rem; cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: 0.75rem; width: 100%; max-width: 300px;
+}
+.form-submit:hover { background: var(--teal-mid); transform: translateY(-1px); }
+.already-member { margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-mid); }
+.already-member a {
+  color: var(--teal-dark); text-decoration: underline;
+  text-underline-offset: 2px; text-decoration-color: var(--gold-line);
+}
+
+/* JOURNEY */
+.journey {
+  background: var(--teal); padding: 4.5rem 2rem 4rem;
+  position: relative; overflow: hidden;
+}
+.journey-watermark {
+  position: absolute; bottom: -2rem; left: 50%; transform: translateX(-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(5rem, 20vw, 14rem); font-weight: 600;
+  color: rgba(255,255,255,0.04); white-space: nowrap;
+  pointer-events: none; letter-spacing: 0.1em; user-select: none;
+}
+.journey-eyebrow {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(240,235,224,0.5); text-align: center; margin-bottom: 1rem;
+}
+.journey-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 6vw, 3rem); font-weight: 300;
+  color: var(--cream); text-align: center; margin-bottom: 3.5rem;
+}
+.journey-title em { font-style: italic; color: var(--gold); }
+.journey-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem 2.5rem; max-width: 640px; margin: 0 auto;
+  position: relative; z-index: 1;
+}
+.journey-step { text-align: center; }
+.step-circle {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: transparent;
+  border: 2.5px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.25rem; transition: border-color 0.3s, background 0.3s;
+}
+.journey-step:hover .step-circle { background: rgba(188,166,145,0.15); }
+.step-circle span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem; color: var(--cream); font-weight: 400; letter-spacing: 0.05em;
+}
+.step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem; font-weight: 400; color: var(--cream); margin-bottom: 0.5rem;
+}
+.step-body { font-size: 0.8rem; color: rgba(240,235,224,0.55); line-height: 1.75; }
+
+/* EVENTS */
+.events-section { background: var(--cream-warm); padding: 4rem 2rem; }
+.events-eyebrow {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-mid); margin-bottom: 0.6rem; text-align: center;
+}
+.events-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 400;
+  color: var(--teal-dark); text-align: center; margin-bottom: 3rem; line-height: 1.15;
+}
+.events-title em { font-style: italic; }
+.events-grid {
+  display: flex; flex-direction: column; gap: 1rem;
+  max-width: 560px; margin: 0 auto;
+}
+.event-card {
+  background: var(--cream); border: 1px solid rgba(188,166,145,0.3);
+  padding: 1.5rem 1.75rem;
+  display: flex; align-items: flex-start; gap: 1.25rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.event-card:hover { border-color: var(--gold); transform: translateX(3px); }
+.event-date { min-width: 3rem; text-align: center; flex-shrink: 0; }
+.event-date-day {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 300; color: var(--teal); line-height: 1; display: block;
+}
+.event-date-month {
+  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold-line); display: block; margin-top: 0.15rem;
+}
+.event-divider { width: 1px; background: rgba(188,166,145,0.3); align-self: stretch; flex-shrink: 0; }
+.event-tag {
+  font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold-line); margin-bottom: 0.3rem; display: block;
+}
+.event-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 500; color: var(--teal-dark);
+  line-height: 1.2; margin-bottom: 0.2rem;
+}
+.event-meta { font-size: 0.78rem; color: var(--text-mid); }
+.events-note { text-align: center; margin-top: 2rem; font-size: 0.8rem; color: var(--text-mid); }
+.events-note a {
+  color: var(--teal); text-decoration: underline;
+  text-underline-offset: 2px; text-decoration-color: var(--gold-line);
+}
+
+/* PLUS MANY MORE */
+.more-events {
+  max-width: 560px; margin: 2.5rem auto 0;
+  padding: 2rem 1.75rem;
+  border: 1px solid rgba(188,166,145,0.3);
+  background: var(--cream); text-align: center;
+}
+.more-events-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-weight: 400; color: var(--teal-dark);
+  margin-bottom: 0.5rem;
+}
+.more-events-sub {
+  font-size: 0.82rem; color: var(--text-mid); line-height: 1.7;
+  margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto;
+}
+.more-events-tags {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;
+}
+.more-tag {
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--teal); border: 1px solid rgba(26,74,66,0.2);
+  padding: 0.35rem 0.75rem; background: transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+.more-tag:hover { background: rgba(26,74,66,0.06); border-color: var(--teal); }
+
+/* WHAT MAKES US DIFFERENT */
+.different-section { background: var(--cream); padding: 4.5rem 2rem; }
+.different-eyebrow {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-mid); margin-bottom: 0.6rem; text-align: center;
+}
+.different-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 400;
+  color: var(--teal-dark); text-align: center; margin-bottom: 3rem; line-height: 1.15;
+}
+.different-title em { font-style: italic; }
+.different-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1rem; max-width: 100%; margin: 0 auto;
+}
+.different-card {
+  background: var(--cream-warm);
+  border: 1px solid rgba(188,166,145,0.25);
+  padding: 1.5rem 1.25rem;
+  transition: background 0.3s, border-color 0.3s, transform 0.2s;
+}
+.different-card:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+  transform: translateY(-3px);
+}
+.different-card:hover .different-card-title { color: var(--cream); }
+.different-card:hover .different-card-body { color: rgba(240,235,224,0.75); }
+.different-card:hover .different-card-rule { background: var(--gold); }
+.different-icon {
+  font-size: 1.25rem; margin-bottom: 0.75rem; display: block; line-height: 1;
+}
+.different-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 400; color: var(--teal-dark);
+  margin-bottom: 0.5rem; line-height: 1.2;
+}
+.different-card-rule {
+  width: 24px; height: 1px; background: var(--gold); margin-bottom: 0.75rem;
+}
+.different-card-body { font-size: 0.8rem; color: var(--text-mid); line-height: 1.65; }
+
+/* CTA BANNER */
+.cta-banner {
+  background: var(--teal); padding: 5rem 2rem;
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(600px, 120vw); height: min(600px, 120vw);
+  border-radius: 50%; border: 1px solid rgba(255,255,255,0.05); pointer-events: none;
+}
+.cta-banner-eyebrow {
+  font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1.25rem;
+}
+.cta-banner-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 8vw, 4.5rem); font-weight: 300;
+  color: var(--cream); line-height: 1.1; margin-bottom: 1rem;
+  position: relative; z-index: 1;
+}
+.cta-banner-sub { font-size: 0.9rem; color: rgba(240,235,224,0.6); margin-bottom: 2.5rem; }
+.cta-banner-btn {
+  display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--teal-dark); background: var(--gold);
+  padding: 1.1rem 2.75rem; text-decoration: none;
+  transition: background 0.2s, transform 0.15s; position: relative; z-index: 1;
+}
+.cta-banner-btn:hover { background: var(--gold-line); transform: translateY(-1px); }
+
+/* FOOTER */
+footer { background: var(--teal-dark); padding: 2.5rem 2rem; text-align: center; }
+.footer-top {
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem; flex-wrap: wrap;
+  margin-bottom: 1.5rem; padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(188,166,145,0.12);
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; color: var(--cream); letter-spacing: 0.06em;
+}
+.footer-links { display: flex; gap: 1.75rem; list-style: none; align-items: center; }
+.footer-links a {
+  font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(240,235,224,0.45); text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-links .footer-app-btn {
+  color: var(--teal-dark); background: var(--gold);
+  padding: 0.45rem 1rem; transition: background 0.2s;
+}
+.footer-links .footer-app-btn:hover { background: var(--gold-line); }
+.footer-bottom {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem; flex-wrap: wrap;
+}
+.footer-copy { font-size: 0.65rem; color: rgba(240,235,224,0.2); letter-spacing: 0.05em; }
+.footer-legal { display: flex; gap: 1.25rem; list-style: none; }
+.footer-legal a {
+  font-size: 0.62rem; letter-spacing: 0.1em;
+  color: rgba(240,235,224,0.25); text-decoration: none;
+  transition: color 0.2s; cursor: pointer;
+}
+.footer-legal a:hover { color: var(--gold); }
+
+/* PRIVACY MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(19,46,40,0.85);
+  z-index: 200; display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--cream); max-width: 620px; width: 100%;
+  max-height: 85vh; overflow-y: auto; padding: 3rem 2.5rem;
+  position: relative; transform: translateY(16px); transition: transform 0.25s;
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-close {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  background: none; border: none; font-size: 1.4rem;
+  color: var(--text-mid); cursor: pointer; line-height: 1; padding: 0.25rem;
+}
+.modal-close:hover { color: var(--teal); }
+.modal-eyebrow {
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-line); margin-bottom: 0.75rem;
+}
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 400; color: var(--teal-dark);
+  margin-bottom: 0.35rem; line-height: 1.1;
+}
+.modal-updated { font-size: 0.72rem; color: var(--text-mid); margin-bottom: 2rem; opacity: 0.6; }
+.modal-section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 500; color: var(--teal-dark); margin: 1.75rem 0 0.5rem;
+}
+.modal p { font-size: 0.85rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 0.75rem; }
+.modal a { color: var(--teal); }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 600px) {
+  .hero-stats { gap: 1.5rem; }
+  .footer-top { flex-direction: column; align-items: center; }
+  .footer-bottom { flex-direction: column; align-items: center; }
+  .different-grid { grid-template-columns: 1fr; }
+}
+```
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav>
+  <span class="nav-logo">One House</span>
+  <a href="https://onehousesocialc.disciplemedia.com/" target="_blank" rel="noopener" class="nav-cta">Join the Club</a>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+  <p class="hero-eyebrow">A social club that always feels like home for people who want to keep meeting new people - with something always on.</p>
+  <h1 class="hero-title">
+    A place<br>to belong.<br>
+    <em>Again and again.</em>
+  </h1>
+  <p class="hero-body">One House is a membership community built around real friendship. Online and IRL events, genuine connection, and a social life that actually sticks.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-number">2000+</span>
+      <span class="hero-stat-label">In community</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-number">30+</span>
+      <span class="hero-stat-label">Events a year</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-number">&#163;20</span>
+      <span class="hero-stat-label">From / month</span>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+
+<section class="pillars reveal" id="about">
+  <p class="pillars-eyebrow">What makes us different</p>
+  <div class="pillars-tabs">
+    <button class="pillar-tab active" data-panel="socials">Regular Socials</button>
+    <button class="pillar-tab" data-panel="home">Feel at Home</button>
+    <button class="pillar-tab" data-panel="community">A Real Community</button>
+  </div>
+  <div class="pillar-panels">
+    <div class="pillar-panel active" id="panel-socials">
+      <h3 class="pillar-panel-title">Your regular social calendar.</h3>
+      <p class="pillar-panel-body">Brunches, nights out, cultural outings, travel - a consistent rhythm so you always have somewhere to be and someone to meet. 30+ events a year means you'll never be short of plans.</p>
+    </div>
+    <div class="pillar-panel" id="panel-home">
+      <h3 class="pillar-panel-title">From day one, it feels familiar.</h3>
+      <p class="pillar-panel-body">Members look out for each other, include new faces, and make sure no one is standing alone by the door. Our hosts set the tone - warm, welcoming, no awkward intros required.</p>
+    </div>
+    <div class="pillar-panel" id="panel-community">
+      <h3 class="pillar-panel-title">Not a list. An actual community.</h3>
+      <p class="pillar-panel-body">Two years in, 2,000+ members, and a group chat that doesn't go quiet. Members who come once tend to come back. That's the whole point.</p>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN FORM -->
+
+<section class="join-section reveal" id="join">
+  <h2 class="join-title">Join One House</h2>
+  <p class="join-subtitle">Start with a free membership and explore the community. When you're ready, upgrade to a paid plan from &#163;20/month for priority access, exclusive events and full member perks.</p>
+  <form class="signup-form" onsubmit="handleFormSubmit(event)">
+    <div class="form-field">
+      <label class="form-label">First Name</label>
+      <input type="text" class="form-input" placeholder="Your name" />
+    </div>
+    <div class="form-field">
+      <label class="form-label">Last Name</label>
+      <input type="text" class="form-input" placeholder="Your surname" />
+    </div>
+    <div class="form-field">
+      <label class="form-label">Email Address</label>
+      <input type="email" class="form-input" placeholder="your@email.com" />
+    </div>
+    <div class="form-field">
+      <label class="form-label">Instagram Handle</label>
+      <input type="text" class="form-input" placeholder="@yourhandle" />
+    </div>
+    <div class="form-field">
+      <label class="form-label">Date of Birth</label>
+      <input type="date" class="form-input" />
+    </div>
+    <div class="form-field">
+      <label class="form-label">How did you hear about us?</label>
+      <select class="form-select">
+        <option value="" disabled selected>Select one</option>
+        <option>Instagram</option>
+        <option>A friend or member</option>
+        <option>TikTok</option>
+        <option>Google</option>
+        <option>An event I attended</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="consent1" />
+      <label class="checkbox-label" for="consent1">
+        I'm happy to receive updates from One House. We'll never share your details with anyone else. <a href="#" onclick="openPrivacy(event)">Privacy policy.</a>
+      </label>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="consent2" />
+      <label class="checkbox-label" for="consent2">
+        Add me to the One House mailing list - event announcements, member news, and what's on.
+      </label>
+    </div>
+    <button type="submit" class="form-submit">Join for Free &#8594;</button>
+  </form>
+  <p class="already-member">Already a member? <a href="https://onehousesocialc.disciplemedia.com/" target="_blank" rel="noopener">Download the app here.</a></p>
+</section>
+
+<!-- JOURNEY -->
+
+<section class="journey" id="how-it-works">
+  <p class="journey-eyebrow">The Journey</p>
+  <h2 class="journey-title">Simple steps <em>to join</em></h2>
+  <div class="journey-grid">
+    <div class="journey-step reveal">
+      <div class="step-circle"><span>01</span></div>
+      <h3 class="step-title">Sign up</h3>
+      <p class="step-body">Fill in the short form above to get you started.</p>
+    </div>
+    <div class="journey-step reveal">
+      <div class="step-circle"><span>02</span></div>
+      <h3 class="step-title">Get your invite</h3>
+      <p class="step-body">Create your profile, download the app, and you're in.</p>
+    </div>
+    <div class="journey-step reveal">
+      <div class="step-circle"><span>03</span></div>
+      <h3 class="step-title">Join the app</h3>
+      <p class="step-body">Create your profile, explore upcoming events, and find your corner of the community.</p>
+    </div>
+    <div class="journey-step reveal">
+      <div class="step-circle"><span>04</span></div>
+      <h3 class="step-title">Show up</h3>
+      <p class="step-body">Come to your first event. Meet people who get it. Welcome home.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT MAKES US DIFFERENT -->
+
+<section class="different-section">
+  <p class="different-eyebrow reveal">What makes us different</p>
+  <h2 class="different-title reveal">Built around <em>belonging</em></h2>
+  <div class="different-grid">
+    <div class="different-card reveal">
+      <div class="different-icon">&#x1F942;</div>
+      <h3 class="different-card-title">Socials</h3>
+      <div class="different-card-rule"></div>
+      <p class="different-card-body">From intimate dinners to lively nights out - every event is crafted to bring people together in the best possible way.</p>
+    </div>
+    <div class="different-card reveal">
+      <div class="different-icon">&#x1F3E0;</div>
+      <h3 class="different-card-title">Feel Like Home</h3>
+      <div class="different-card-rule"></div>
+      <p class="different-card-body">Walk into any One House event and feel like you already belong. That's the standard we hold ourselves to.</p>
+    </div>
+    <div class="different-card reveal">
+      <div class="different-icon">&#x2726;</div>
+      <h3 class="different-card-title">Community</h3>
+      <div class="different-card-rule"></div>
+      <p class="different-card-body">More than a ticket list. Members become friends, collaborators, and the people you actually want to spend your weekends with.</p>
+    </div>
+  </div>
+</section>
+
+<!-- UPCOMING EVENTS -->
+
+<section class="events-section" id="events">
+  <p class="events-eyebrow reveal">Coming up</p>
+  <h2 class="events-title reveal">What's <em>on the calendar</em></h2>
+  <div class="events-grid">
+    <div class="event-card reveal">
+      <div class="event-date">
+        <span class="event-date-day">9</span>
+        <span class="event-date-month">Apr</span>
+      </div>
+      <div class="event-divider"></div>
+      <div class="event-info">
+        <span class="event-tag">Dining</span>
+        <div class="event-name">Dining - The Dining Room</div>
+        <div class="event-meta">Location sent after purchase - Thu 7:00-11:30 PM</div>
+      </div>
+    </div>
+    <div class="event-card reveal">
+      <div class="event-date">
+        <span class="event-date-day">19</span>
+        <span class="event-date-month">Apr</span>
+      </div>
+      <div class="event-divider"></div>
+      <div class="event-info">
+        <span class="event-tag">One Wellness</span>
+        <div class="event-name">Boxing Social</div>
+        <div class="event-meta">Battersea - Sat 3:00 PM</div>
+      </div>
+    </div>
+    <div class="event-card reveal">
+      <div class="event-date">
+        <span class="event-date-day">24</span>
+        <span class="event-date-month">Apr</span>
+      </div>
+      <div class="event-divider"></div>
+      <div class="event-info">
+        <span class="event-tag">Social</span>
+        <div class="event-name">Film Screening</div>
+        <div class="event-meta">Cineworld @ The O2, Greenwich - Fri 6:30-10:30 PM</div>
+      </div>
+    </div>
+    <div class="event-card reveal">
+      <div class="event-date">
+        <span class="event-date-day">25</span>
+        <span class="event-date-month">Apr</span>
+      </div>
+      <div class="event-divider"></div>
+      <div class="event-info">
+        <span class="event-tag">Social</span>
+        <div class="event-name">Lounge &amp; Games Night</div>
+        <div class="event-meta">Market Place Food Hall, St Paul's - Sat 4:00-11:00 PM</div>
+      </div>
+    </div>
+    <div class="event-card reveal">
+      <div class="event-date">
+        <span class="event-date-day">1</span>
+        <span class="event-date-month">May</span>
+      </div>
+      <div class="event-divider"></div>
+      <div class="event-info">
+        <span class="event-tag">Members' Travel</span>
+        <div class="event-name">One House @ The Villa - Marrakesh</div>
+        <div class="event-meta">1-4 May 2026 - Limited spaces remaining</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLUS MANY MORE -->
+
+  <div class="more-events reveal">
+    <p class="more-events-label">Plus many more</p>
+    <p class="more-events-sub">Every month brings something new. Here's a taste of what members get invited to:</p>
+    <div class="more-events-tags">
+      <span class="more-tag">R&amp;B yoga</span>
+      <span class="more-tag">Living room listens</span>
+      <span class="more-tag">Coworking days</span>
+      <span class="more-tag">Members-only events</span>
+      <span class="more-tag">Gallery openings</span>
+      <span class="more-tag">Brunch clubs</span>
+      <span class="more-tag">Escape rooms</span>
+      <span class="more-tag">Pilates</span>
+      <span class="more-tag">Book club</span>
+      <span class="more-tag">Murder mysteries</span>
+      <span class="more-tag">Museum trips</span>
+      <span class="more-tag">Dance classes</span>
+      <span class="more-tag">City walks</span>
+      <span class="more-tag">Members' dinners</span>
+    </div>
+  </div>
+
+  <p class="events-note reveal">Members get priority access, exclusive events and special perks. <a href="https://onehousesocialc.disciplemedia.com/" target="_blank" rel="noopener">Join to get access.</a></p>
+</section>
+
+<!-- CTA BANNER -->
+
+<section class="cta-banner reveal">
+  <p class="cta-banner-eyebrow">Ready?</p>
+  <h2 class="cta-banner-title">Your social life is<br>waiting for you.</h2>
+  <p class="cta-banner-sub">Join 2000+ members already living it.</p>
+  <a href="https://onehousesocialc.disciplemedia.com/" target="_blank" rel="noopener" class="cta-banner-btn">Join the Club</a>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-top">
+    <span class="footer-logo">One House Social Club</span>
+    <ul class="footer-links">
+      <li><a href="https://www.instagram.com/onehousesocialclub" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.tiktok.com/@onehousesocialclub" target="_blank" rel="noopener">TikTok</a></li>
+      <li><a href="https://onehousesocialc.disciplemedia.com/" target="_blank" rel="noopener" class="footer-app-btn">Download the App</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2026 One House Social Club. London.</span>
+    <ul class="footer-legal">
+      <li><a href="#" onclick="openPrivacy(event)">Privacy Notice</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- PRIVACY MODAL -->
+
+<div class="modal-overlay" id="privacyModal" onclick="closePrivacyOutside(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+    <button class="modal-close" onclick="closePrivacy()" aria-label="Close">&times;</button>
+    <p class="modal-eyebrow">One House Social Club</p>
+    <h2 class="modal-title" id="privacyTitle">Privacy Notice</h2>
+    <p class="modal-updated">Last updated: March 2026</p>
+
+```
+<p>One House Social Club ("we", "us", "our") takes your privacy seriously. This notice explains what personal data we collect when you sign up, how we use it, and your rights under UK data protection law (UK GDPR and the Data Protection Act 2018).</p>
+
+<h3 class="modal-section-title">Who we are</h3>
+<p>One House Social Club is a London-based social membership community. We are the data controller for the personal information you provide. For any privacy queries, contact us at <a href="mailto:onehousesocialclub@gmail.com">onehousesocialclub@gmail.com</a>.</p>
+
+<h3 class="modal-section-title">What we collect and why</h3>
+<p><strong style="font-weight:500;color:var(--teal-dark)">Membership sign-up:</strong> We collect your first name, last name, email address, Instagram handle, date of birth, and how you heard about us. We use this to set up and manage your membership, verify eligibility, and personalise your experience.</p>
+<p><strong style="font-weight:500;color:var(--teal-dark)">Marketing communications:</strong> With your consent, we'll send you event announcements, member news, and what's on. You can withdraw consent at any time.</p>
+<p><strong style="font-weight:500;color:var(--teal-dark)">Event attendance:</strong> If you book events through Ticket Tailor, we may record attendance for operational and safety purposes.</p>
+
+<h3 class="modal-section-title">Our lawful basis</h3>
+<p>We process your data on the basis of <strong style="font-weight:500">contract</strong> (to manage your membership), <strong style="font-weight:500">consent</strong> (for marketing emails), and <strong style="font-weight:500">legitimate interests</strong> (to improve our events and community). We will never use your data in ways you wouldn't reasonably expect.</p>
+
+<h3 class="modal-section-title">Who we share your data with</h3>
+<p>We do not sell your data. We share it only with the following trusted processors who help us run One House:</p>
+<p><strong style="font-weight:500;color:var(--teal-dark)">Disciple Media</strong> - our community app platform (<a href="https://onehousesocialc.disciplemedia.com/" target="_blank">onehousesocialc.disciplemedia.com</a>)</p>
+<p><strong style="font-weight:500;color:var(--teal-dark)">Ticket Tailor</strong> - our event ticketing platform</p>
+<p>Both operate under data processing agreements and are bound by UK GDPR. We may also disclose data if required by law or to protect the safety of our members.</p>
+
+<h3 class="modal-section-title">How long we keep your data</h3>
+<p>We retain your personal data for as long as your membership is active. If you cancel or we close your account, we'll retain your data for up to 12 months for administrative purposes, then securely delete it - unless we're required to keep it longer by law.</p>
+
+<h3 class="modal-section-title">Your rights</h3>
+<p>Under UK GDPR, you have the right to: access your data, correct inaccurate data, request deletion ("right to be forgotten"), object to processing, restrict processing, and withdraw consent at any time without affecting prior processing.</p>
+<p>To exercise any of these rights, email <a href="mailto:onehousesocialclub@gmail.com">onehousesocialclub@gmail.com</a>. We'll respond within 30 days. You also have the right to lodge a complaint with the <a href="https://ico.org.uk" target="_blank">ICO</a> (Information Commissioner's Office) at ico.org.uk.</p>
+
+<h3 class="modal-section-title">Cookies and tracking</h3>
+<p>This signup page does not use advertising or tracking cookies. It uses only essential functionality to render the page correctly. No third-party ad networks receive your data from this page.</p>
+
+<h3 class="modal-section-title">Changes to this notice</h3>
+<p>We may update this notice from time to time. The latest version will always be available on this page. We'll notify active members of any material changes by email.</p>
+```
+
+  </div>
+</div>
+
+<script>
+  // Form submit - redirect to Disciple app
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    window.location.href = 'https://onehousesocialc.disciplemedia.com/';
+  }
+
+  // Pillar tabs
+  document.querySelectorAll('.pillar-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = tab.dataset.panel;
+      document.querySelectorAll('.pillar-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.pillar-panel').forEach(function(p) { p.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('panel-' + target).classList.add('active');
+    });
+  });
+
+  // Scroll reveal
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+
+  // Privacy modal
+  function openPrivacy(e) {
+    if (e) e.preventDefault();
+    document.getElementById('privacyModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePrivacy() {
+    document.getElementById('privacyModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closePrivacyOutside(e) {
+    if (e.target === document.getElementById('privacyModal')) { closePrivacy(); }
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closePrivacy(); }
+  });
+</script>
+
+</body>
+</html>
