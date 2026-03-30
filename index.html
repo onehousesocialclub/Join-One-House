@@ -37,17 +37,24 @@ nav {
   padding: 1.1rem 2rem;
   background: var(--cream);
   border-bottom: 1px solid rgba(188,166,145,0.25);
+  min-width: 0;
 }
 .nav-logo {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.25rem; font-weight: 400; letter-spacing: 0.06em;
+  font-size: 1.1rem; font-weight: 400; letter-spacing: 0.04em;
   color: var(--teal-dark);
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
 }
 .nav-cta {
-  font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+  font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--teal-dark); text-decoration: none;
   border-bottom: 1.5px solid var(--gold-line); padding-bottom: 1px;
   transition: color 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: 1.5rem;
 }
 .nav-cta:hover { color: var(--teal-mid); }
 
