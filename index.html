@@ -33,30 +33,17 @@
 /* NAV */
 nav {
   position: sticky; top: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: center;
   padding: 1.1rem 2rem;
   background: var(--cream);
   border-bottom: 1px solid rgba(188,166,145,0.25);
-  min-width: 0;
 }
 .nav-logo {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem; font-weight: 400; letter-spacing: 0.04em;
-  color: var(--teal-dark);
-  white-space: nowrap;
-  flex-shrink: 1;
-  min-width: 0;
+  font-size: 1.25rem; font-weight: 400; letter-spacing: 0.06em;
+  color: var(--teal-dark); text-align: center;
 }
-.nav-cta {
-  font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--teal-dark); text-decoration: none;
-  border-bottom: 1.5px solid var(--gold-line); padding-bottom: 1px;
-  transition: color 0.2s;
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-left: 1.5rem;
-}
-.nav-cta:hover { color: var(--teal-mid); }
+.nav-cta { display: none; }
 
 /* HERO */
 .hero {
@@ -451,7 +438,7 @@ footer { background: var(--teal-dark); padding: 2.5rem 2rem; text-align: center;
 <!-- NAV -->
 
 <nav>
-  <span class="nav-logo">One House</span>
+  <span class="nav-logo">One House Social Club</span>
   <a href="https://onehousesocialc.disciplemedia.com/" target="_blank" rel="noopener" class="nav-cta">Join the Club</a>
 </nav>
 
